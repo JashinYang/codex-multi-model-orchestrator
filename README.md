@@ -26,23 +26,23 @@ For one narrow, reversible change with clear acceptance criteria, the direct pat
 
 ## Installation
 
-Copy \`SKILL.md\` into a Codex skill directory named \`multi-model-orchestrator\`.
+Copy `SKILL.md` into a Codex skill directory named `multi-model-orchestrator`.
 
 The repository layout is intentionally minimal:
 
-\`\`\`text
+```text
 SKILL.md    # Codex skill instructions
 README.md   # This overview
 LICENSE     # MIT license
-\`\`\`
+```
 
 ## Usage
 
 Invoke the skill explicitly:
 
-\`\`\`text
+```text
 Use $multi-model-orchestrator to plan and execute this task.
-\`\`\`
+```
 
 Include the desired outcome, constraints, files or systems in scope, and how success should be verified.
 
@@ -54,11 +54,11 @@ Model names below are routing preferences, not guarantees. The exact model ident
 | --- | --- | --- |
 | Architecture, hard diagnosis, conflicting evidence, or final integration | Sol | Make the execution-shape decision and own cross-cutting validation |
 | General implementation, code review, or focused research | Terra | Deliver a bounded implementation or investigation |
-| Isolated, quality-sensitive work with enough latency budget | Luna at \`max\` | Produce a focused, high-quality batch |
+| Isolated, quality-sensitive work with enough latency budget | Luna at `max` | Produce a focused, high-quality batch |
 | High-volume extraction, classification, or independent checks | DeepSeek V4 Flash | Process many independent items |
 | Complex coding or reasoning with clear acceptance tests | DeepSeek V4 Pro | Handle difficult, testable implementation work |
 
-\`DeepSeek V4 Flash\` and \`DeepSeek V4 Pro\` are descriptive labels. Use the exact identifier exposed by the current integration rather than inventing one.
+`DeepSeek V4 Flash` and `DeepSeek V4 Pro` are descriptive labels. Use the exact identifier exposed by the current integration rather than inventing one.
 
 ## Execution flow
 
@@ -73,7 +73,7 @@ Do not infer speed or price from a model name. When DeepSeek is selected primari
 
 ## Validation
 
-Changes to this repository are checked by \`.github/workflows/validate.yml\`. The workflow verifies that the required files exist and that \`SKILL.md\` contains valid frontmatter with \`name\` and \`description\`.
+Changes to this repository are checked by `.github/workflows/validate.yml`. The workflow verifies that the required files exist and that `SKILL.md` contains valid frontmatter with `name` and `description`.
 
 ## License
 
@@ -81,9 +81,9 @@ This project is available under the MIT License. See [LICENSE](LICENSE).
 
 ## Example prompt
 
-\`\`\`text
+```text
 Use $multi-model-orchestrator. First classify task intensity and decide whether
 the direct path is sufficient. If not, have Sol choose between a single-agent
 workflow and independent batches. Route each batch by task fit, avoid edits to
 the same file, and finish with integration and validation evidence.
-\`\`\`
+```
