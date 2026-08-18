@@ -1,0 +1,59 @@
+name: Validate skill
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate skill files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          skill_path = Path("SKILL.md")
+          readme_path = Path("README.md")
+
+          assert skill_path.is_file(), "SKILL.md is missing"
+          assert readme_path.is_file(), "README.md is missing"
+
+          skill = skill_path.read_text(encoding="utf-8")
+          assert skill.startswith("---\n"), "SKILL.md must start with YAML frontmatter"
+
+          closing = skill.find("\n---\n", 4)
+          assert closing != -1, "SKILL.md frontmatter closing delimiter is missing"
+
+          frontmatter = skill[4:closing]
+          fields = {}
+          for line in frontmatter.splitlines():
+              if ":" in line:
+                  key, value = line.split(":", 1)
+                  fields[key.strip()] = value.strip()
+
+          for key in ("name", "description"):
+              assert fields.get(key), f"frontmatter field {key!r} is missing"
+
+          assert re.fullmatch(r"[a-z0-9-]+", fields["name"]), \
+              "frontmatter name must use lowercase kebab-case"
+
+          assert readme_path.read_text(encoding="utf-8").strip(), \
+              "README.md is empty"
+
+          print(f"Validated {fields['name']}")
+          PY
