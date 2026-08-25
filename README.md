@@ -1,89 +1,94 @@
 # Codex Multi-Model Orchestrator
 
-A Codex skill for planning and coordinating complex work across multiple AI models.
+[![Validate skill](https://github.com/JashinYang/codex-multi-model-orchestrator/actions/workflows/validate.yml/badge.svg)](https://github.com/JashinYang/codex-multi-model-orchestrator/actions/workflows/validate.yml)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-It screens simple tasks, routes independent work to the best available model, and keeps one agent responsible for integration and final validation.
+A Codex Skill for deciding when to work directly, when to ask Sol for an execution-shape decision, and when to run independent batches—then integrating and validating the result.
 
-## What it helps with
+> This repository contains instructions for Codex. It is not a standalone CLI, model runtime, or hosted service.
 
-- Break complex requests into independent workstreams.
-- Choose an execution shape: one agent, a Sol-led workflow, or parallel batches.
-- Route architecture, implementation, research, extraction, and validation work by task fit.
-- Keep ownership boundaries clear and avoid overlapping edits.
-- Account for verification, retry, cost, and latency uncertainty before reporting success.
+## Why this exists
+
+Complex coding and research tasks often fail for predictable reasons: the work is split before its dependencies are understood, several agents edit the same file, a model is selected by habit instead of task fit, or a result is reported without evidence of validation.
+
+This Skill turns those failure modes into an explicit workflow:
+
+- screen simple tasks before adding coordination overhead;
+- ask Sol to choose the execution shape when scope, coupling, or risk is unclear;
+- route independent batches using the current collaboration catalog;
+- keep ownership boundaries and shared-file rules visible;
+- account for retry, cost, and latency uncertainty; and
+- reserve integration and final validation for an accountable agent.
+
+## Quick start
+
+1. Copy `SKILL.md` into a Codex skill directory named `multi-model-orchestrator`.
+2. Invoke it explicitly:
+
+   ```text
+   Use $multi-model-orchestrator to plan and execute this task.
+   ```
+
+3. Include the desired outcome, constraints, files or systems in scope, and how success should be verified.
+
+The Skill checks the current model catalog at runtime. Model names in this repository are routing preferences, not guarantees or static identifiers.
+
+## What it does
+
+| Work signal | Default shape | Responsibility |
+| --- | --- | --- |
+| One clear, reversible outcome | Direct path | One suitable agent completes and validates the work |
+| Uncertain scope, coupling, or rework risk | Sol decision path | Sol records intensity, ownership, shape, and acceptance evidence |
+| Independent outputs with low file overlap | Parallel batches | Each batch has one outcome and a concrete handoff |
+| Architecture, security, or irreversible impact | Sol-led integration | Sol owns cross-cutting decisions and final validation |
 
 ## When to use it
 
-Use this skill when a task has meaningful coupling or rework risk, such as:
+Use this Skill for work such as:
 
-- Cross-module implementation or refactoring
-- Architecture and security decisions
-- Difficult diagnosis with conflicting evidence
-- Research, implementation, and testing that can proceed independently
-- High-volume extraction, classification, or quality checks
+- cross-module implementation or refactoring;
+- architecture and security decisions;
+- difficult diagnosis with conflicting evidence;
+- research, implementation, and testing that can proceed independently; or
+- high-volume extraction, classification, or quality checks.
 
 For one narrow, reversible change with clear acceptance criteria, the direct path is usually better than adding coordination overhead.
 
-## Installation
+## Worked examples
 
-Copy `SKILL.md` into a Codex skill directory named `multi-model-orchestrator`.
+The [`examples/`](examples/) directory shows the expected reasoning shape without pretending that every task needs parallelism:
 
-The repository layout is intentionally minimal:
+- [Cross-module refactor](examples/cross-module-refactor.md)
+- [Security investigation](examples/security-investigation.md)
+- [Bulk research and classification](examples/bulk-research.md)
+
+The [`evals/`](evals/) directory contains a small, reviewable set of routing cases for regression checks.
+
+## Installation and usage notes
+
+This repository intentionally stays minimal: `SKILL.md` is the reusable artifact. Keep the user prompt specific about scope and acceptance evidence. Do not ask the Skill to perform external or destructive actions beyond the authorization already provided by the user.
+
+## Validation and maintenance
+
+Every push or pull request to `main` runs [`.github/workflows/validate.yml`](.github/workflows/validate.yml), which checks the Skill frontmatter and required documentation. GitHub Actions updates are tracked by [Dependabot](.github/dependabot.yml).
+
+For contribution expectations, see [`CONTRIBUTING.md`](CONTRIBUTING.md). For vulnerability reports, see [`SECURITY.md`](SECURITY.md).
+
+## Repository layout
 
 ```text
-SKILL.md    # Codex skill instructions
-README.md   # This overview
-LICENSE     # MIT license
+SKILL.md                         # Codex Skill instructions
+README.md                        # Overview and quick start
+examples/                        # Worked routing examples
+evals/                           # Reviewable regression cases
+.github/workflows/validate.yml   # Documentation and frontmatter validation
+.github/ISSUE_TEMPLATE/          # Structured issue intake
+.github/PULL_REQUEST_TEMPLATE/   # Review checklist
+SECURITY.md                      # Private vulnerability reporting policy
+LICENSE                          # MIT license
 ```
-
-## Usage
-
-Invoke the skill explicitly:
-
-```text
-Use $multi-model-orchestrator to plan and execute this task.
-```
-
-Include the desired outcome, constraints, files or systems in scope, and how success should be verified.
-
-## Routing preferences
-
-Model names below are routing preferences, not guarantees. The exact model identifier must come from the current collaboration catalog.
-
-| Work signal | First candidate | Typical responsibility |
-| --- | --- | --- |
-| Architecture, hard diagnosis, conflicting evidence, or final integration | Sol | Make the execution-shape decision and own cross-cutting validation |
-| General implementation, code review, or focused research | Terra | Deliver a bounded implementation or investigation |
-| Isolated, quality-sensitive work with enough latency budget | Luna at `max` | Produce a focused, high-quality batch |
-| High-volume extraction, classification, or independent checks | DeepSeek V4 Flash | Process many independent items |
-| Complex coding or reasoning with clear acceptance tests | DeepSeek V4 Pro | Handle difficult, testable implementation work |
-
-`DeepSeek V4 Flash` and `DeepSeek V4 Pro` are descriptive labels. Use the exact identifier exposed by the current integration rather than inventing one.
-
-## Execution flow
-
-1. **Screen the task.** Use one suitable agent for a clear, reversible outcome. Escalate to Sol when scope, coupling, risk, or rework is uncertain.
-2. **Choose the shape.** Sol records the intensity, coupling, ownership boundaries, and acceptance evidence.
-3. **Run independent batches.** Delegate only when outputs are genuinely independent and file ownership does not overlap.
-4. **Integrate and verify.** Inspect changes, resolve conflicts, run the relevant checks, and report evidence rather than assumptions.
-
-## Cost and latency
-
-Do not infer speed or price from a model name. When DeepSeek is selected primarily for cost, compare the official pricing for that day using a comparable billing basis, and include expected retries and verification work. Treat latency as unknown unless the current environment has same-task measurements.
-
-## Validation
-
-Changes to this repository are checked by `.github/workflows/validate.yml`. The workflow verifies that the required files exist and that `SKILL.md` contains valid frontmatter with `name` and `description`.
 
 ## License
 
 This project is available under the MIT License. See [LICENSE](LICENSE).
 
-## Example prompt
-
-```text
-Use $multi-model-orchestrator. First classify task intensity and decide whether
-the direct path is sufficient. If not, have Sol choose between a single-agent
-workflow and independent batches. Route each batch by task fit, avoid edits to
-the same file, and finish with integration and validation evidence.
-```
