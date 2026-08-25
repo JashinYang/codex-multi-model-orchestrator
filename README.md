@@ -25,6 +25,10 @@ This Skill turns those failure modes into an explicit workflow:
 1. Copy `SKILL.md` into a Codex skill directory named `multi-model-orchestrator`.
 2. Invoke it explicitly:
 
+   ```text
+   Use $multi-model-orchestrator to plan and execute this task.
+   ```
+
 The repository layout is intentionally minimal:
 
 ```text
