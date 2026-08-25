@@ -20,16 +20,18 @@ This Skill turns those failure modes into an explicit workflow:
 - account for retry, cost, and latency uncertainty; and
 - reserve integration and final validation for an accountable agent.
 
-## Quick start
+## Installation
 
 1. Copy `SKILL.md` into a Codex skill directory named `multi-model-orchestrator`.
 2. Invoke it explicitly:
 
-   ```text
-   Use $multi-model-orchestrator to plan and execute this task.
-   ```
+The repository layout is intentionally minimal:
 
-3. Include the desired outcome, constraints, files or systems in scope, and how success should be verified.
+```text
+SKILL.md    # Codex skill instructions
+README.md   # This overview
+LICENSE     # MIT license
+```
 
 The Skill checks the current model catalog at runtime. Model names in this repository are routing preferences, not guarantees or static identifiers.
 
