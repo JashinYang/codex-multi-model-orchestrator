@@ -64,3 +64,6 @@ jobs:
 
           print(f"Validated {fields['name']}")
           PY
+
+      - name: Validate evaluation cases
+        run: python scripts/validate_eval_cases.py
