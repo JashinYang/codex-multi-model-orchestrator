@@ -36,3 +36,19 @@ Track trends across changes to `SKILL.md`:
 - cost-estimate error when comparable pricing evidence exists.
 
 The repository validator checks the case schema and required fields. It does not replace human review of whether a route is substantively correct.
+
+## Behavioral validation
+
+The schema validator only checks structure. To check whether the Skill actually
+selects the expected route, run the cases through a Codex runtime:
+
+```text
+python scripts/run_behavioral_eval.py --model gpt-5.4-mini
+python scripts/run_behavioral_eval.py --limit 3
+```
+
+This invokes `codex exec` in plan-only mode for each case and compares the route
+it reports against `expected_route`. It needs the Skill installed (so
+`$multi-model-orchestrator` is discoverable) and an authenticated provider, so it
+is a local tool rather than part of the default CI. Use `--runner "echo route: sol"`
+for a deterministic plumbing test that does not call a model.

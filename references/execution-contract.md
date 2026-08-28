@@ -7,7 +7,7 @@ Use this reference whenever a task leaves the direct path. The contract makes pa
 Record the following before dispatch:
 
 ```text
-route: direct | sol | batch
+route: direct | sol | batch | stop
 intensity: low | medium | high | critical
 reason: why this route fits the scope, coupling, and risk
 authorization: what internal delegation is allowed; what is excluded
