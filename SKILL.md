@@ -47,6 +47,8 @@ Do not add coordination merely because a task is large. Use Sol when one coheren
 
 ## Stage 1 - execution-shape decision
 
+Before the decision pass, compress the relevant context into a compact packet (roughly 1-3K tokens): the files, symbols, constraints, and findings that affect the decision, plus what was left out and why. A cheaper agent can prepare this packet, so the decision agent reasons on the packet instead of a raw workspace dump.
+
 On the Sol decision path, produce a concise record containing:
 
 - intensity: `low`, `medium`, `high`, or `critical`;
@@ -82,6 +84,7 @@ Apply this gate when cost is a stated objective or when cost could change the ro
    `expected cost = hit input * hit price + miss input * miss price + output * output price + retry/verification allowance`.
 3. Treat speed as unknown without same-task measurements from the current environment. Record a range and confidence rather than repeating vendor claims.
 4. If pricing or latency evidence is unavailable, mark it unknown and choose the quality-safe route or ask the user when the tradeoff is material.
+5. For an expensive reasoning pass, compress the inputs into a compact context packet first and record what was dropped; this bounds the dominant input-token term in the estimate.
 
 ## Batch contract and permissions
 
