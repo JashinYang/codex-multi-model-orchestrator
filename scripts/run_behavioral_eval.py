@@ -66,7 +66,14 @@ def run_codex(prompt: str, model: str | None) -> str:
         if model:
             cmd += ["-m", model]
         cmd += ["-o", str(out), prompt]
-        subprocess.run(cmd, check=True, cwd=REPO_ROOT)
+        subprocess.run(
+            cmd,
+            check=True,
+            cwd=REPO_ROOT,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
         return out.read_text(encoding="utf-8")
 
 
@@ -79,6 +86,7 @@ def run_case(case: dict, model: str | None, runner: str | None) -> str:
             capture_output=True,
             text=True,
             cwd=REPO_ROOT,
+            stdin=subprocess.DEVNULL,
         )
         return proc.stdout
     return run_codex(prompt, model)
