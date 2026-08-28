@@ -9,6 +9,10 @@ metadata:
 
 This Skill governs internal agent routing. It is not a model runtime and it does not grant permission to access secrets, make external network requests, modify protected systems, publish content, or perform destructive actions. Keep the user's requested outcome and authorization scope unchanged.
 
+## Scope and structure
+
+This skill orchestrates multiple Codex agents, so the "Availability gate" and "Delegation procedure" sections assume Codex's collaboration catalog, delegation tools, and `fork_turns`. The rest (rule screen, decision record, security boundary, cost and latency gate, and guardrails) states principles that apply to any agent. When reusing this outside Codex, keep the principles and replace those mechanics with the target runtime's equivalents.
+
 ## Terms used here
 
 - **Direct path:** one suitable agent completes a narrow, reversible outcome and validates it.
