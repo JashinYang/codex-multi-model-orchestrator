@@ -9,6 +9,14 @@ metadata:
 
 This Skill governs internal agent routing. It is not a model runtime and it does not grant permission to access secrets, make external network requests, modify protected systems, publish content, or perform destructive actions. Keep the user's requested outcome and authorization scope unchanged.
 
+## Terms used here
+
+- **Direct path:** one suitable agent completes a narrow, reversible outcome and validates it.
+- **Decision path:** a coupled or high-risk task whose execution shape a decision-capable agent records before other agents start. "Sol" is the role label for that agent, not a product name.
+- **Batch:** independent work split into non-overlapping, owned units that are integrated afterward.
+- **Plan-only vs execute:** plan-only recommends a route without dispatching; execute dispatches only when authorized.
+- **Route:** the declared screening outcome, one of `direct`, `sol`, `batch`, or `stop`. `stop` means the request cannot proceed safely yet (missing authorization, catalog, or delegation tool, or a secret or unsafe action) and must be explained instead of executed.
+
 ## Authority and operating modes
 
 - **Plan-only:** recommend a route and model capabilities without dispatching subagents.
@@ -40,7 +48,7 @@ Do not add coordination merely because a task is large. Use Sol when one coheren
 On the Sol decision path, produce a concise record containing:
 
 - intensity: `low`, `medium`, `high`, or `critical`;
-- route: `direct`, `sol`, or `batch`;
+- route: `direct`, `sol`, `batch`, or `stop`;
 - why the work is coupled or independent;
 - user authorization and any excluded actions;
 - ownership boundaries and shared-file constraints;
