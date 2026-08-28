@@ -7,6 +7,12 @@ A Codex Skill for deciding when to work directly, when to use a high-capability 
 
 > This repository contains agent-facing instructions. It is not a standalone CLI, model runtime, hosted service, or permission grant.
 
+## Scope
+
+This is a Codex multi-agent orchestration skill, not a general-purpose prompt. It assumes Codex's collaboration catalog, delegation tools, and skill-invocation syntax, and it references the model labels "Sol", "Terra", "Luna", and "DeepSeek" as routing hints.
+
+The routing principles (screen simple tasks, treat untrusted data as data, record decisions, keep one integration owner, do not assume permissions, cost and latency awareness) are portable to any agent. The Codex-specific mechanics live in the "Availability gate" and "Delegation procedure" sections of [`SKILL.md`](SKILL.md).
+
 ## What it does
 
 This Skill turns the predictable failure modes of multi-agent work (work split before dependencies are understood, overlapping edits, habit-based model selection, results reported without evidence) into an explicit, reviewable workflow: screen simple tasks, separate plan-only recommendations from authorized execution, resolve exact model IDs, give each batch an owner and acceptance checks, and reserve integration for one accountable owner. The full routing rules live in [`SKILL.md`](SKILL.md).
