@@ -53,27 +53,24 @@ def extract_route(text: str) -> str | None:
     return match.group(1).lower() if match else None
 
 
-def run_codex(prompt: str, model: str) -> str:
+def run_codex(prompt: str, model: str | None) -> str:
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "last.txt"
-        subprocess.run(
-            [
-                "codex", "exec",
-                "--ephemeral",
-                "--skip-git-repo-check",
-                "--sandbox", "read-only",
-                "--color", "never",
-                "-m", model,
-                "-o", str(out),
-                prompt,
-            ],
-            check=True,
-            cwd=REPO_ROOT,
-        )
+        cmd = [
+            "codex", "exec",
+            "--ephemeral",
+            "--skip-git-repo-check",
+            "--sandbox", "read-only",
+            "--color", "never",
+        ]
+        if model:
+            cmd += ["-m", model]
+        cmd += ["-o", str(out), prompt]
+        subprocess.run(cmd, check=True, cwd=REPO_ROOT)
         return out.read_text(encoding="utf-8")
 
 
-def run_case(case: dict, model: str, runner: str | None) -> str:
+def run_case(case: dict, model: str | None, runner: str | None) -> str:
     prompt = build_prompt(case)
     if runner:
         proc = subprocess.run(
@@ -89,7 +86,7 @@ def run_case(case: dict, model: str, runner: str | None) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", default="gpt-5.4-mini", help="Model passed to 'codex exec'.")
+    parser.add_argument("--model", default=None, help="Model passed to 'codex exec' (defaults to the configured model when omitted).")
     parser.add_argument("--limit", type=int, default=None, help="Run only the first N cases.")
     parser.add_argument(
         "--runner",
