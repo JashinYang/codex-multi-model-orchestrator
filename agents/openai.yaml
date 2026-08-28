@@ -1,0 +1,4 @@
+interface:
+  display_name: "Multi-Model Orchestrator"
+  short_description: "Decide and execute safe routing of complex tasks across Codex agents"
+  default_prompt: "Use $multi-model-orchestrator in [plan-only|execute] mode to screen the task for a direct path, and when delegation is authorized, plan or execute safe routing across available Codex agents with ownership, permission, and verification evidence."
