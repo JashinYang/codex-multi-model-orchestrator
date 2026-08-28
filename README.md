@@ -3,7 +3,7 @@
 [![Validate skill](https://github.com/JashinYang/codex-multi-model-orchestrator/actions/workflows/validate.yml/badge.svg)](https://github.com/JashinYang/codex-multi-model-orchestrator/actions/workflows/validate.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-A Codex Skill for deciding when to work directly, when to use a high-capability decision pass, and when to run independent agent batches��then integrating and validating the result.
+A Codex Skill for deciding when to work directly, when to use a high-capability decision pass, and when to run independent agent batches—then integrating and validating the result.
 
 > This repository contains agent-facing instructions. It is not a standalone CLI, model runtime, hosted service, or permission grant.
 
@@ -21,7 +21,7 @@ Complex coding and research tasks often fail for predictable reasons: work is sp
 
 ## Quick start
 
-1. Copy the whole Skill folder��`SKILL.md` and `references/`��into a Codex skill directory named `multi-model-orchestrator` (commonly `$CODEX_HOME/skills/multi-model-orchestrator/`; use the configured directory for your environment).
+1. Copy the whole Skill folder—`SKILL.md` and `references/`—into a Codex skill directory named `multi-model-orchestrator` (commonly `$CODEX_HOME/skills/multi-model-orchestrator/`; use the configured directory for your environment).
 2. Choose a mode explicitly:
 
    ```text
