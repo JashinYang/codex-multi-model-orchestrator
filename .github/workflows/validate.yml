@@ -67,3 +67,6 @@ jobs:
 
       - name: Validate evaluation cases
         run: python scripts/validate_eval_cases.py
+
+      - name: Validate skill file integrity
+        run: python scripts/check_skill_files.py
